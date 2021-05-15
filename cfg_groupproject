@@ -1,0 +1,26 @@
+import csv
+import statistics  # to get the mean function
+with open('sales.csv', 'r') as csv_file:
+    spreadsheet = csv.DictReader(csv_file)
+    total = []
+    for column in spreadsheet:   # this calculates the lowest sale
+       total_sales = int(column['sales'])
+       total.append(total_sales)
+lowest_sale = min(total)
+highest_sale = max(total)
+mean_sale = statistics.mean(total)  # using statistics module
+monthly_changes = statistics.stdev(total) #monthly change via statistic module using standard deviation
+#it is also possible to assign statistics.variance(total) I have opted not to
+print('Lowest Sale: £', lowest_sale)
+print('Highest Sale: £', highest_sale)
+print('Average Sale: £{:.2f}'.format(mean_sale))  # average via mean to .2 float
+print('Standard Deviation: £{:.2f}'.format(monthly_changes))  # average change via standard deviation to .2 float
+
+import pandas as pd
+import matplotlib.pyplot as plt
+df = pd.read_csv("sales.csv",sep=",")
+df.plot.bar(x = 'month', y = ['sales', 'expenditure'])
+plt.title('Performance in 2018')
+plt.xlabel('Month')
+plt.ylabel('GBP (£)')
+plt.show()
